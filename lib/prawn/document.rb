@@ -241,7 +241,8 @@ module Prawn
     #
     #  pdf.start_new_page(:template => multipage_template.pdf, :template_page => 2)
     #
-    def start_new_page(options = {})
+    def start_new_page(options = {})  
+      puts ":::: Forked Prawn : Generating New Page :::::"
       if last_page = state.page
         last_page_size    = last_page.size
         last_page_layout  = last_page.layout
@@ -277,7 +278,9 @@ module Prawn
         state.insert_page(state.page, @page_number)
         @page_number += 1
 
-        canvas { image(@background, :at => bounds.top_left) } if @background
+        # canvas { image(@background, :at => bounds.top_left) } if @background  
+        image(@background, :width => bounds.width) if @background
+        move_up bounds.height
         @y = @bounding_box.absolute_top
 
         float do
